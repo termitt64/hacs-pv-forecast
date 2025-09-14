@@ -38,7 +38,21 @@ def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
 class PVForecastApiClient:
     """PV Forecast API Client."""
 
-    URL = "https://www.pvforecast.cz/api/?key={apikey}&lat={latitude:.3f}&lon={longitude:.3f}"
+    """
+    key*        Unique client API key
+    lat*        Latitude for forecast (3 decimal digits)
+    lon*        Longitude for forecast (3 decimal digits)
+    forecast    Forecast type (pv - sunshine, temp, rain - rain accumulation)
+    format      Data format (simple - plain text, csv, json)
+    type        Forecast type (hour, day)
+    number      Forecast length (24,48,72 hours, or 1,2,3 days)
+    date        Allows to turn on/off timestamp in 'simple' format (1 - on, 0 - off)
+    dst         Auto switch to Dayligth Saving Time (1 - on, 0 - off)
+    start       Forcast begins (today, tomorrow, auto - 0-12:today 12-24:tomorrow)
+
+    * mandatory parameters
+    """
+    URL = "https://www.pvforecast.cz/api/?key={apikey}&lat={latitude:.3f}&lon={longitude:.3f}&type=hour&number=72&start=today&format=json&dst=0"
 
     def __init__(
         self,
