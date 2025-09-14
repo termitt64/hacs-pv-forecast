@@ -40,13 +40,11 @@ class PVForecastApiClient:
 
     def __init__(
         self,
-        username: str,
-        password: str,
+        apikey: str,
         session: aiohttp.ClientSession,
     ) -> None:
         """PV Forecast API Client."""
-        self._username = username
-        self._password = password
+        self._apikey = apikey
         self._session = session
 
     async def async_get_data(self) -> Any:
