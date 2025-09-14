@@ -1,6 +1,6 @@
 {
   "domain": "pv_forecast_cz",
-  "name": "PV Forecase by UCEEB",
+  "name": "PV Forecast CZ",
   "codeowners": [
     "@termitt64"
   ],
