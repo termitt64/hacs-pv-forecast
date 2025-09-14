@@ -1,6 +1,6 @@
 # PV Forecast
 
-Sun light forecast based on [PV-Forecast][pv-forecast], a University Centre for Energy Efficient Buildings, CTU in Prague.
+Sun light forecast based on [PV-Forecast][pv-forecast], run by the University Centre for Energy Efficient Buildings, CTU in Prague. Obtaining API key (registration) is needed, to make any use of this integration.
 
 # Installation
 
