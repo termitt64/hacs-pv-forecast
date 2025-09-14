@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
@@ -27,8 +26,6 @@ ENTITY_DESCRIPTIONS = (
         icon="mdi:solar-power",
     ),
 )
-
-_LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
@@ -62,7 +59,6 @@ class PVForecastSensor(PVForecastEntity, SensorEntity):
     def native_value(self) -> float | None:
         """Return the native value of the sensor."""
         time_str = dt_util.as_local(dt_util.now()).strftime("%Y-%m-%d %H:00:00")
-        _LOGGER.info(f"time: {time_str}")  # noqa: G004
         return self.coordinator.data.get_forecast(time_str)
 
     @property

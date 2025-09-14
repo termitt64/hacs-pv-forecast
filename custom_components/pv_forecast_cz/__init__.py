@@ -45,6 +45,8 @@ async def async_setup_entry(
         client=PVForecastApiClient(
             apikey=entry.data[CONF_API_KEY],
             session=async_get_clientsession(hass),
+            latitude=hass.config.latitude,
+            longitude=hass.config.longitude,
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,

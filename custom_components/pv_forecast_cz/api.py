@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import socket
 
 import aiohttp
@@ -24,6 +25,9 @@ class PVForecastApiClientAuthenticationError(
     PVForecastApiClientError,
 ):
     """Exception to indicate an authentication error."""
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
@@ -59,19 +63,23 @@ class PVForecastApiClient:
         self,
         apikey: str,
         session: aiohttp.ClientSession,
+        latitude: float,
+        longitude: float,
     ) -> None:
         """PV Forecast API Client."""
         self._apikey = apikey
         self._session = session
 
+        self._latitude = self.to_range(latitude, 48.5, 51.0)
+        self._longitude = self.to_range(longitude, 12, 19)
+        _LOGGER.info(f"lat: {self._latitude}, lon: {self._longitude}")  # noqa: G004
+
     async def async_get_data(self) -> ForecastData:
         """Get data from the API."""
-        lat = 50.055
-        lon = 14.222
         return await self._api_wrapper(
             method="get",
             url=PVForecastApiClient.URL.format(
-                apikey=self._apikey, latitude=lat, longitude=lon
+                apikey=self._apikey, latitude=self._latitude, longitude=self._longitude
             ),
         )
 
@@ -83,6 +91,10 @@ class PVForecastApiClient:
             data={"title": value},
             headers={"Content-type": "application/json; charset=UTF-8"},
         )
+
+    def to_range(self, number: float, lower: float, upper: float) -> float:
+        """Return number in given range, minimum if lower, maximum of greater."""
+        return min(max(number, lower), upper)
 
     async def _api_wrapper(
         self,
