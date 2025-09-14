@@ -5,9 +5,9 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
-from astral import now
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.components.sensor.const import SensorDeviceClass, SensorStateClass
+from homeassistant.util import dt as dt_util
 
 from .entity import PVForecastEntity
 
@@ -61,6 +61,6 @@ class PVForecastSensor(PVForecastEntity, SensorEntity):
     @property
     def native_value(self) -> float | None:
         """Return the native value of the sensor."""
-        time_str = now().strftime("%Y-%m-%d %H:00:00")
+        time_str = dt_util.as_local(dt_util.now()).strftime("%Y-%m-%d %H:00:00")
         _LOGGER.info(f"time: {time_str}")  # noqa: G004
         return self.coordinator.data.get_forecast(time_str)
