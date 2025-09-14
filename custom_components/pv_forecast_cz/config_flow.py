@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.const import CONF_API_KEY
+from homeassistant.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE
 from homeassistant.helpers import selector
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from slugify import slugify
@@ -29,9 +29,17 @@ class PVForecastFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     ) -> config_entries.ConfigFlowResult:
         """Handle a flow initialized by the user."""
         _errors = {}
+
+        hass_latitude = round(self.hass.config.latitude, 3)
+        hass_longitude = round(self.hass.config.longitude, 3)
+
         if user_input is not None:
             try:
-                await self._test_key(key=user_input[CONF_API_KEY])
+                await self._test_key(
+                    key=user_input[CONF_API_KEY],
+                    lat=user_input[CONF_LATITUDE],
+                    lon=user_input[CONF_LONGITUDE],
+                )
             except PVForecastApiClientAuthenticationError as exception:
                 LOGGER.warning(exception)
                 _errors["base"] = "auth"
@@ -66,15 +74,39 @@ class PVForecastFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                             type=selector.TextSelectorType.TEXT,
                         ),
                     ),
+                    vol.Required(
+                        CONF_LATITUDE,
+                        default=(user_input or {}).get(CONF_LATITUDE, hass_latitude),
+                    ): selector.NumberSelector(
+                        selector.NumberSelectorConfig(
+                            min=48.5,
+                            max=51,
+                            step=0.001,
+                            mode=selector.NumberSelectorMode.BOX,
+                        )
+                    ),
+                    vol.Required(
+                        CONF_LONGITUDE,
+                        default=(user_input or {}).get(CONF_LONGITUDE, hass_longitude),
+                    ): selector.NumberSelector(
+                        selector.NumberSelectorConfig(
+                            min=12,
+                            max=19,
+                            step=0.001,
+                            mode=selector.NumberSelectorMode.BOX,
+                        )
+                    ),
                 },
             ),
             errors=_errors,
         )
 
-    async def _test_key(self, key: str) -> None:
+    async def _test_key(self, key: str, lat: float, lon: float) -> None:
         """Validate API key."""
         client = PVForecastApiClient(
             apikey=key,
             session=async_create_clientsession(self.hass),
+            latitude=lat,
+            longitude=lon,
         )
         await client.async_get_data()

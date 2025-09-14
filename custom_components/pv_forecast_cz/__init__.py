@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import TYPE_CHECKING
 
-from homeassistant.const import CONF_API_KEY, Platform
+from homeassistant.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, Platform
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.loader import async_get_loaded_integration
 
@@ -45,8 +45,8 @@ async def async_setup_entry(
         client=PVForecastApiClient(
             apikey=entry.data[CONF_API_KEY],
             session=async_get_clientsession(hass),
-            latitude=hass.config.latitude,
-            longitude=hass.config.longitude,
+            latitude=entry.data[CONF_LATITUDE],
+            longitude=entry.data[CONF_LONGITUDE],
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
