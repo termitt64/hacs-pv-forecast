@@ -3,8 +3,21 @@
 Sun light forecast based on [PV-Forecast][pv-forecast], run by the University Centre for Energy Efficient Buildings, CTU in Prague. Obtaining API key (registration) is needed, to make any use of this integration.
 
 # Installation
+You can install the integration using HACS (preferred) or manually.
+
+## HACS (preferred)
+1. Open HACS in your Home Assistant instance.
+2. Search for "PV Forecast CZ" and install it.
+3. Restart Home Assistant.
+## Manual
+1. Download the custom_components/pv_forecast_cz directory.
+2. Copy it into the custom_components folder in your Home Assistant configuration directory.
+3. Restart Home Assistant.
+
 
 # Configuration
+In order to get valid forecast from [PV-Forecast](https://wp2.pvforecast.cz/) you have to register (free) to obtain API key for request.
+Latitude and Longitute for the forecast is taken automatically from HA configuration.
 
 # Feedback
 
