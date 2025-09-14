@@ -13,3 +13,7 @@ class ForecastData:
     def get_forecast(self, time: str) -> float:
         """Return forecast for given datetime (YYYY-MM-dd HH:mm:ss)."""
         return self._data[time]
+
+    def as_attributes(self) -> dict[str, float]:
+        """Return dictionary in Hour:forecast format."""
+        return self._data

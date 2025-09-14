@@ -64,3 +64,8 @@ class PVForecastSensor(PVForecastEntity, SensorEntity):
         time_str = dt_util.as_local(dt_util.now()).strftime("%Y-%m-%d %H:00:00")
         _LOGGER.info(f"time: {time_str}")  # noqa: G004
         return self.coordinator.data.get_forecast(time_str)
+
+    @property
+    def extra_state_attributes(self) -> dict:
+        """Fill sensor attributes with forecast."""
+        return self.coordinator.data.as_attributes()
