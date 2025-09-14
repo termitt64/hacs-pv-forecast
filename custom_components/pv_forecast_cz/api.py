@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import socket
-from typing import Any
 
 import aiohttp
 import async_timeout
+
+from .forecast_data import ForecastData
 
 
 class PVForecastApiClientError(Exception):
@@ -63,7 +64,7 @@ class PVForecastApiClient:
         self._apikey = apikey
         self._session = session
 
-    async def async_get_data(self) -> Any:
+    async def async_get_data(self) -> ForecastData:
         """Get data from the API."""
         lat = 50.055
         lon = 14.222
@@ -74,7 +75,7 @@ class PVForecastApiClient:
             ),
         )
 
-    async def async_set_title(self, value: str) -> Any:
+    async def async_set_title(self, value: str) -> ForecastData:
         """Get data from the API."""
         return await self._api_wrapper(
             method="patch",
@@ -89,7 +90,7 @@ class PVForecastApiClient:
         url: str,
         data: dict | None = None,
         headers: dict | None = None,
-    ) -> Any:
+    ) -> ForecastData:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
@@ -100,7 +101,7 @@ class PVForecastApiClient:
                     json=data,
                 )
                 _verify_response_or_raise(response)
-                return await response.text()
+                return ForecastData(await response.text())
 
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"

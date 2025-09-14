@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from astral import now
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 
 from .entity import PVForecastEntity
@@ -52,6 +53,7 @@ class PVForecastSensor(PVForecastEntity, SensorEntity):
         self.entity_description = entity_description
 
     @property
-    def native_value(self) -> str | None:
+    def native_value(self) -> float | None:
         """Return the native value of the sensor."""
-        return self.coordinator.data.get("body")
+        time_str = now().strftime("%Y-%m-%d %H:00:00")
+        return self.coordinator.data.get_forecast(time_str)
