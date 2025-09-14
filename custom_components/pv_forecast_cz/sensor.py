@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import logging
 from typing import TYPE_CHECKING
 
 from astral import now
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
+from homeassistant.components.sensor.const import SensorDeviceClass, SensorStateClass
 
 from .entity import PVForecastEntity
 
@@ -18,11 +20,15 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
-        key="pv_forecast_cz",
-        name="PV Forecast Sensor",
-        icon="mdi:format-quote-close",
+        key="photo_energy_forecast_now",
+        device_class=SensorDeviceClass.ENERGY,
+        state_class=SensorStateClass.MEASUREMENT,
+        name="Current photo forecast",
+        icon="mdi:solar-power",
     ),
 )
+
+_LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
@@ -56,4 +62,5 @@ class PVForecastSensor(PVForecastEntity, SensorEntity):
     def native_value(self) -> float | None:
         """Return the native value of the sensor."""
         time_str = now().strftime("%Y-%m-%d %H:00:00")
+        _LOGGER.info(f"time: {time_str}")  # noqa: G004
         return self.coordinator.data.get_forecast(time_str)
