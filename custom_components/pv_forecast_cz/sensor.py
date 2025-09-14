@@ -21,9 +21,9 @@ if TYPE_CHECKING:
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="photo_energy_forecast_now",
-        device_class=SensorDeviceClass.ENERGY,
+        device_class=SensorDeviceClass.IRRADIANCE,
         state_class=SensorStateClass.MEASUREMENT,
-        name="Current photo forecast",
+        name="Current irradiance forecast",
         icon="mdi:solar-power",
     ),
 )
