@@ -1,5 +1,5 @@
 """
-Custom integration to integrate PV-Forecast (http://www.pvforecast.cz) with Home Assistant.
+Custom integration to integrate PV-Forecast with Home Assistant.
 
 For more details about this integration, please refer to
 https://github.com/termitt64/hacs-pv-forecast
