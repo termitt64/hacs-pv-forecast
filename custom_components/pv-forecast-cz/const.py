@@ -1,8 +1,8 @@
-"""Constants for integration_blueprint."""
+"""Constants for PV Forecast."""
 
 from logging import Logger, getLogger
 
 LOGGER: Logger = getLogger(__package__)
 
-DOMAIN = "integration_blueprint"
-ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
+DOMAIN = "pv_forecast_cz"
+ATTRIBUTION = "Data provided by https://www.pvforecast.cz/"

@@ -1,12 +1,12 @@
 {
-  "domain": "integration_blueprint",
-  "name": "Integration blueprint",
+  "domain": "pv_forecast_cz",
+  "name": "PV Forecase by UCEEB",
   "codeowners": [
-    "@ludeeus"
+    "@termitt64"
   ],
   "config_flow": true,
-  "documentation": "https://github.com/ludeeus/integration_blueprint",
+  "documentation": "https://github.com/termitt64/hacs-pv-forecast",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/ludeeus/integration_blueprint/issues",
+  "issue_tracker": "https://github.com/termitt64/hacs-pv-forecast/issues",
   "version": "0.1.0"
 }
