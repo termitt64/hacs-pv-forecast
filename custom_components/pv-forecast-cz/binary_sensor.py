@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
     from .coordinator import PVForecastDataUpdateCoordinator
-    from .data import PVForecastBlueprintConfigEntry
+    from .data import PVForecastConfigEntry
 
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(

@@ -23,7 +23,7 @@ class PVForecastFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
-    async def async_step_user(
+    async def async_step_apikey(
         self,
         user_input: dict | None = None,
     ) -> config_entries.ConfigFlowResult:
@@ -55,7 +55,7 @@ class PVForecastFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 )
 
         return self.async_show_form(
-            step_id="user",
+            step_id="apikey",
             data_schema=vol.Schema(
                 {
                     vol.Required(
