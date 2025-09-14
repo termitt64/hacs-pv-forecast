@@ -38,6 +38,8 @@ def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
 class PVForecastApiClient:
     """PV Forecast API Client."""
 
+    URL = "https://www.pvforecast.cz/api/?key={apikey}&lat={latitude:.3f}&lon={longitude:.3f}"
+
     def __init__(
         self,
         apikey: str,
@@ -49,9 +51,13 @@ class PVForecastApiClient:
 
     async def async_get_data(self) -> Any:
         """Get data from the API."""
+        lat = 50.055
+        lon = 14.222
         return await self._api_wrapper(
             method="get",
-            url="https://jsonplaceholder.typicode.com/posts/1",
+            url=PVForecastApiClient.URL.format(
+                apikey=self._apikey, latitude=lat, longitude=lon
+            ),
         )
 
     async def async_set_title(self, value: str) -> Any:
@@ -80,7 +86,7 @@ class PVForecastApiClient:
                     json=data,
                 )
                 _verify_response_or_raise(response)
-                return await response.json()
+                return await response.text()
 
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
