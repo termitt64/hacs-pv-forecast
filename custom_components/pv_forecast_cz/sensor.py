@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.components.sensor.const import SensorDeviceClass, SensorStateClass
+from homeassistant.const import UnitOfIrradiance
 from homeassistant.util import dt as dt_util
 
 from .entity import PVForecastEntity
@@ -22,6 +23,7 @@ ENTITY_DESCRIPTIONS = (
         key="photo_energy_forecast_now",
         device_class=SensorDeviceClass.IRRADIANCE,
         state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement=UnitOfIrradiance.WATTS_PER_SQUARE_METER,
         name="Current irradiance forecast",
         icon="mdi:solar-power",
     ),
